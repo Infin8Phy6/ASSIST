@@ -11,15 +11,15 @@ app.use(bodyParser.json());
 
 // Handle TSX form submissions
 app.post('/submit', (req, res) => {
-    const { name, email, message } = req.body;
+    const { h, acttime, actstatus } = req.body;
     
-    if (!name || !email || !message) {
-        return res.status(400).json({ error: 'All fields are required' });
+    if (!h || !acttime || !actstatus) {
+        return res.status(400).json({ error: 'All fields (h, acttime, actstatus) are required' });
     }
 
-    console.log('Received submission:', { name, email, message });
+    console.log('Received submission:', { h, acttime, actstatus });
 
-    res.json({ success: true, message: 'Submission received' });
+    res.json({ success: true, message: 'Submission received successfully' });
 });
 
 // Start server
