@@ -33,7 +33,7 @@ app.post('/submit', (req, res) => {
     const { h, acttime, actstatus, referralCode } = req.body;
 
     // Console log received data
-    console.log('Received Data:', { h, acttime, actstatus, referralCode});
+    console.log('Received Data:', { h, acttime, actstatus});
 
     // Validate input
     if (!h || !acttime || !actstatus) {
@@ -41,13 +41,13 @@ app.post('/submit', (req, res) => {
     }
 
     // Save data to MySQL
-    const sql = 'INSERT INTO examinerusers (h, acttime, actstatus) VALUES (?, ?, ?, ?)';
-    db.query(sql, [h, acttime, actstatus, referralCode], (err, result) => {
+    const sql = 'INSERT INTO examinerusers (h, acttime, actstatus) VALUES (?, ?, ?)';
+    db.query(sql, [h, acttime, actstatus], (err, result) => {
         if (err) {
             console.error('Error inserting data:', err);
             return res.status(500).json({ error: 'Failed to save data' });
         }
-        console.log('Data successfully saved to database:', { h, acttime, actstatus, referralCode });
+        console.log('Data successfully saved to database:', { h, acttime, actstatus });
         res.json({ success: true, message: 'Data saved successfully' });
     });
 });
