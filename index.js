@@ -30,10 +30,10 @@ db.connect((err) => {
 
 // Handle TSX form submissions
 app.post('/submit', (req, res) => {
-    const { h, acttime, actstatus } = req.body;
+    const { h, acttime, actstatus, referralCode } = req.body;
 
     // Console log received data
-    console.log('Received Data:', { h, acttime, actstatus });
+    console.log('Received Data:', { h, acttime, actstatus, referralCode});
 
     // Validate input
     if (!h || !acttime || !actstatus) {
@@ -41,13 +41,13 @@ app.post('/submit', (req, res) => {
     }
 
     // Save data to MySQL
-    const sql = 'INSERT INTO examinerusers (h, acttime, actstatus) VALUES (?, ?, ?)';
-    db.query(sql, [h, acttime, actstatus], (err, result) => {
+    const sql = 'INSERT INTO examinerusers (h, acttime, actstatus) VALUES (?, ?, ?, ?)';
+    db.query(sql, [h, acttime, actstatus, referralCode], (err, result) => {
         if (err) {
             console.error('Error inserting data:', err);
             return res.status(500).json({ error: 'Failed to save data' });
         }
-        console.log('Data successfully saved to database:', { h, acttime, actstatus });
+        console.log('Data successfully saved to database:', { h, acttime, actstatus, referralCode });
         res.json({ success: true, message: 'Data saved successfully' });
     });
 });
