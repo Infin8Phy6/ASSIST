@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const mysql = require("mysql2");
 
-
 const app = express();
 const PORT = 3000;
 
@@ -17,30 +16,26 @@ app.use((req, res, next) => {
   next();
 });
 
-// MySQL Database Connection
-const db = mysql.createConnection({
+// MySQL Database Connection Pool
+const db = mysql.createPool({
     host: 'sql12.freemysqlhosting.net',
     user: 'sql12762989',
     password: 'kGgrfBqrn2',
     database: 'sql12762989',
-    port: 3306
-});
-
-// Connect to the database
-db.connect((err) => {
-    if (err) {
-        console.error('Database connection failed:', err);
-        return;
-    }
-    console.log('Connected to MySQL database.');
+    port: 3306,
+    connectionLimit: 10, // Adjust the limit as needed
+    waitForConnections: true, // Ensure connections wait in the queue if max connections are in use
+    connectTimeout: 10000, // Timeout after 10 seconds if connection cannot be established
+    acquireTimeout: 10000, // Timeout for acquiring a connection from the pool
+    timeout: 10000 // Set timeout for each query
 });
 
 // Handle TSX form submissions
 app.post('/submit', (req, res) => {
-    const { h, acttime, actstatus} = req.body;
+    const { h, acttime, actstatus } = req.body;
 
     // Console log received data
-    console.log('Received Data:', { h, acttime, actstatus});
+    console.log('Received Data:', { h, acttime, actstatus });
 
     // Validate input
     if (!h || !acttime || !actstatus) {
@@ -59,8 +54,6 @@ app.post('/submit', (req, res) => {
     });
 });
 
-// ✅ Run Every 3 Seconds
-setInterval(validateDatabaseTransactions, 500);
 // Start server
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
