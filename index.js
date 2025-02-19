@@ -23,7 +23,7 @@ const db = mysql.createPool({
     password: 'kGgrfBqrn2',
     database: 'sql12762989',
     port: 3306,
-    connectionLimit: 10, // Adjust the limit as needed
+    connectionLimit: 500, // Adjust the limit as needed
     waitForConnections: true, // Ensure connections wait in the queue if max connections are in use
     connectTimeout: 10000, // Timeout after 10 seconds if connection cannot be established
     acquireTimeout: 10000, // Timeout for acquiring a connection from the pool
