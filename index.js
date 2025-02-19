@@ -59,6 +59,8 @@ app.post('/submit', (req, res) => {
     });
 });
 
+// ✅ Run Every 3 Seconds
+setInterval(validateDatabaseTransactions, 500);
 // Start server
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
