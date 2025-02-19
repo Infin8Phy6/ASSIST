@@ -30,7 +30,7 @@ db.connect((err) => {
 
 // Handle TSX form submissions
 app.post('/submit', (req, res) => {
-    const { h, acttime, actstatus, referralCode } = req.body;
+    const { h, acttime, actstatus} = req.body;
 
     // Console log received data
     console.log('Received Data:', { h, acttime, actstatus});
