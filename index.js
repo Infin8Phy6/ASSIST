@@ -1,14 +1,21 @@
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const mysql = require('mysql2');
+const express = require("express");
+const cors = require("cors");
+const mysql = require("mysql2");
+const { ethers } = require("ethers");
 
 const app = express();
-const PORT = 5000;
+const PORT = 3000;
 
-// Middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
+
+// ✅ CORS Headers Middleware (For Cross-Origin Requests)
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  next();
+});
 
 // MySQL Database Connection
 const db = mysql.createConnection({
